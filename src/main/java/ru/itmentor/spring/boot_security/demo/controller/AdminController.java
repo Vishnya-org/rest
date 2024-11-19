@@ -31,8 +31,11 @@ public class AdminController {
     }
 
     @PostMapping
-    public String performRegistration(@ModelAttribute("user") User user, @RequestParam("roles") Set<String> roles) {
-        user.setRoles(changeStringToRole(roles));
+    public String performRegistration(@ModelAttribute("user") User user,
+                                      @RequestParam(value = "roles", required = false) Set<String> roles) {
+        if (roles != null && !roles.isEmpty()) {
+            user.setRoles(changeStringToRole(roles));
+        }
         userService.save(user);
         return "redirect:/admin/users";
     }
