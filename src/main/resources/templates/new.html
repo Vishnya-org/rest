@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create user</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/admin}" th:object="${user}">
+    <label for="name"> Enter name:</label>
+    <input type="text" th:field="*{name}" id="name"/>
+    <br/>
+    <label for="password"> Enter password:</label>
+    <input type="password" th:field="*{password}" id="password"/>
+    <br/>
+    <label for="age"> Enter age:</label>
+    <input type="text" th:field="*{age}" id="age"/>
+    <br/>
+    <br/>
+    <label>Select roles:</label>
+    <div>
+        <label>
+            <input type="checkbox" th:field="*{roles}" th:value="'ADMIN'" th:checked="${user.roles.contains(T(ru.itmentor.spring.boot_security.demo.model.Role).ADMIN)}" /> Admin
+        </label>
+        <label>
+            <input type="checkbox" th:field="*{roles}" th:value="'USER'" th:checked="${user.roles.contains(T(ru.itmentor.spring.boot_security.demo.model.Role).USER)}" /> User
+        </label>
+    </div>
+    <br/>
+    <input type="submit" value="Create"/>
+</form>
+<br/>
+<br/>
+<br/>
+<a href="/">Back to Index page</a>
+</body>
+</html>

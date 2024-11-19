@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Change data</title>
+</head>
+<body>
+<form th:method="PATCH" th:action="@{/user/{id}(id=${user.getId})}" th:object="${user}">
+    <label> Your Name: </label>
+    <span th:text="${user.name}"></span>
+    <br/>
+    <label for="password"> Enter password:</label>
+    <input type="password" th:field="*{password}" id="password"/>
+    <br/>
+    <label for="age"> Enter age:</label>
+    <input type="text" th:field="*{age}" id="age"/>
+    <br/>
+    <br/>
+    <input type="submit" value="Update"/>
+</form>
+<br/>
+<br/>
+<br/>
+<a href="/user">Back to User page</a>
+<br/>
+<br/>
+<br/>
+<a href="/">Back to Index page</a>
+</body>
+</html>

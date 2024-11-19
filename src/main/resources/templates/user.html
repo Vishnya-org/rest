@@ -4,8 +4,19 @@
     <title>Spring Security Example</title>
 </head>
 <body>
-<h1>User, welcome spring boot security page!</h1>
-
-
+<h1>User, welcome to the spring boot security page!</h1>
+<br/>
+<br/>
+<p>Name: <span th:text="${user.name}"></span></p>
+<p>Age: <span th:text="${user.age}"></span></p>
+<a th:href="@{/user/{id}/update(id=${user.id})}">Update</a>
+<br/>
+<br/>
+<br/>
+<a href="/">Back to Index page</a>
+<br/>
+<br/>
+<br/>
+<a href="/logout">Logout</a>
 </body>
 </html>
