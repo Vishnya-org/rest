@@ -1,13 +1,11 @@
 package ru.itmentor.spring.boot_security.demo.controller;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.itmentor.spring.boot_security.demo.model.User;
 import ru.itmentor.spring.boot_security.demo.service.UserService;
 
-@Controller
+@RestController
 @RequestMapping("/user")
 public class UserController {
 
@@ -18,21 +16,16 @@ public class UserController {
     }
 
     @GetMapping
-    public String getUserById(Model model, Authentication authentication) {
+    public User getUserById(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
-        model.addAttribute("user", userService.findById(user.getId()));
-        return "user";
+        return userService.findById(user.getId());
     }
 
-    @GetMapping("/{id}/update")
-    public String updateUser(@PathVariable int id, Model model) {
-        model.addAttribute("user", userService.findById(id));
-        return "upd_user";
-    }
-
-    @PatchMapping("/{id}")
-    public String updateUser(@ModelAttribute("user") User user) {
-        userService.update(user);
-        return "redirect:/user";
+    @PatchMapping()
+    public User updateUser(Authentication authentication, @RequestBody User updUser) {
+        User user = (User) authentication.getPrincipal();
+        updUser.setId(user.getId());
+        userService.update(updUser);
+        return userService.findById(updUser.getId());
     }
 }

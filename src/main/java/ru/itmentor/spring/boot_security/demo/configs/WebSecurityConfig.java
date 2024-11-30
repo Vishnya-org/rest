@@ -14,28 +14,24 @@ import ru.itmentor.spring.boot_security.demo.service.UserDetailsServiceImpl;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final SuccessUserHandler successUserHandler;
     private final UserDetailsServiceImpl user;
 
-    public WebSecurityConfig(SuccessUserHandler successUserHandler, UserDetailsServiceImpl user) {
-        this.successUserHandler = successUserHandler;
+    public WebSecurityConfig(UserDetailsServiceImpl user) {
         this.user = user;
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .httpBasic()
+                .and()
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/user/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
                 .anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .successHandler(successUserHandler)
-                .permitAll()
-                .and()
-                .logout().logoutUrl("/logout").logoutSuccessUrl("/login")
-                .permitAll();
+                .csrf().disable()
+                .formLogin().disable();
     }
 
     @Override

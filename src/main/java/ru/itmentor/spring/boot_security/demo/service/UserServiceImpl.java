@@ -31,15 +31,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(User user) {
+        User oldUser = userRepository.findById(user.getId());
         if (user.getName() == null) {
-            User oldUser = userRepository.findById(user.getId());
             user.setName(oldUser.getName());
-            if (user.getRoles().isEmpty()) {
-                user.setRoles(oldUser.getRoles());
-            }
-            if (user.getPassword() == null) {
-                user.setPassword(passwordEncoder.encode(oldUser.getPassword()));
-            }
+        }
+        if (user.getRoles().isEmpty()) {
+            user.setRoles(oldUser.getRoles());
+        }
+        if (user.getPassword() == null) {
+            user.setPassword(oldUser.getPassword());
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.updateUser(user);
